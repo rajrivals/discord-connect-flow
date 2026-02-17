@@ -4,7 +4,6 @@
 
 @layer base {
   :root {
-    /* Rivals Gaming — deep navy with teal accents */
     --background: 215 50% 6%;
     --foreground: 200 20% 92%;
 
@@ -44,11 +43,12 @@
     --sidebar-border: 195 40% 16%;
     --sidebar-ring: 160 84% 44%;
 
-    /* Custom tokens */
     --success: 160 84% 44%;
     --success-foreground: 210 50% 6%;
     --microcopy: 200 15% 45%;
-    --card-glow: 195 60% 18%;
+    --card-glow: 180 60% 22%;
+    --glass-bg: 210 45% 10% / 0.6;
+    --glass-border: 195 50% 28%;
   }
 }
 
@@ -61,5 +61,143 @@
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     line-height: 1.6;
+  }
+}
+
+@layer components {
+  /* Liquid glass surface */
+  .glass {
+    background: hsl(var(--glass-bg));
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    border: 1px solid hsl(var(--glass-border) / 0.3);
+    box-shadow:
+      0 0 0 1px hsl(var(--glass-border) / 0.08) inset,
+      0 8px 32px -8px hsl(215 50% 4% / 0.5),
+      0 0 24px -6px hsl(var(--card-glow) / 0.15);
+  }
+
+  .glass-strong {
+    background: hsl(210 45% 10% / 0.75);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    border: 1px solid hsl(var(--glass-border) / 0.35);
+    box-shadow:
+      0 0 0 1px hsl(var(--glass-border) / 0.1) inset,
+      0 12px 40px -8px hsl(215 50% 4% / 0.6),
+      0 0 30px -6px hsl(var(--card-glow) / 0.2);
+  }
+
+  /* Animated gradient border shimmer */
+  .glass-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .glass-shimmer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--glass-border) / 0.1),
+      hsl(var(--card-glow) / 0.3),
+      hsl(var(--glass-border) / 0.1),
+      hsl(160 84% 44% / 0.15)
+    );
+    background-size: 300% 300%;
+    animation: shimmer-border 6s ease-in-out infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  @keyframes shimmer-border {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* Stagger children animations */
+  .stagger-children > * {
+    opacity: 0;
+    animation: fade-in 0.4s ease-out forwards;
+  }
+  .stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+  .stagger-children > *:nth-child(2) { animation-delay: 60ms; }
+  .stagger-children > *:nth-child(3) { animation-delay: 120ms; }
+  .stagger-children > *:nth-child(4) { animation-delay: 180ms; }
+  .stagger-children > *:nth-child(5) { animation-delay: 240ms; }
+  .stagger-children > *:nth-child(6) { animation-delay: 300ms; }
+
+  @keyframes fade-in {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+
+  /* CTA glow button */
+  .btn-glow {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+  .btn-glow::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: hsl(var(--primary) / 0.25);
+    filter: blur(12px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+  .btn-glow:hover::after {
+    opacity: 1;
+  }
+  .btn-glow:hover {
+    box-shadow: 0 0 20px -4px hsl(var(--primary) / 0.4);
+  }
+
+  /* Ambient background orbs */
+  .ambient-bg {
+    position: relative;
+    overflow: hidden;
+  }
+  .ambient-bg::before,
+  .ambient-bg::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .ambient-bg::before {
+    width: 600px;
+    height: 600px;
+    background: hsl(var(--primary));
+    top: -200px;
+    right: -200px;
+    animation: float 8s ease-in-out infinite;
+  }
+  .ambient-bg::after {
+    width: 500px;
+    height: 500px;
+    background: hsl(var(--card-glow));
+    bottom: -150px;
+    left: -150px;
+    animation: float 10s ease-in-out infinite reverse;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-30px) translateX(15px); }
   }
 }
