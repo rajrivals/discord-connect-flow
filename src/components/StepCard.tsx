@@ -9,7 +9,7 @@ const StepCard = ({ children, className }: StepCardProps) => {
   return (
     <div
       className={cn(
-        "w-full max-w-[640px] rounded-xl border border-border bg-card p-5 sm:p-6 shadow-lg shadow-black/20 transition-all duration-200",
+        "w-full max-w-[640px] rounded-xl border border-[hsl(var(--card-glow))] bg-card p-5 sm:p-6 shadow-[0_0_24px_-6px_hsl(var(--card-glow))] transition-all duration-200",
         className
       )}
     >
@@ -19,7 +19,7 @@ const StepCard = ({ children, className }: StepCardProps) => {
 };
 
 export const StepLabel = ({ step, total = 4 }: { step: number; total?: number }) => (
-  <p className="text-xs font-medium text-muted-foreground mb-1">
+  <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-1.5">
     Step {step} of {total}
   </p>
 );

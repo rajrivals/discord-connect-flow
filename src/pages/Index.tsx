@@ -49,7 +49,7 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
+      <header className="border-b border-border bg-background/95 backdrop-blur-sm">
         <div className="mx-auto max-w-[960px] px-4 h-14 flex items-center justify-between">
           <span className="text-lg font-bold text-foreground tracking-tight">Dota2Group</span>
           <nav className="hidden sm:flex items-center gap-4 text-xs text-muted-foreground">
@@ -88,7 +88,7 @@ const Index = () => {
               <StepLabel step={1} />
               <StepTitle>Link your Discord</StepTitle>
               <StepBody>Required to unlock the main server and tournament channels.</StepBody>
-              <Button onClick={goNext} className="w-full h-12 rounded-xl text-sm font-semibold">
+              <Button onClick={goNext} className="w-full h-12 rounded-xl text-sm font-bold tracking-wide">
                 Link Discord &amp; continue →
               </Button>
               <StepMicrocopy>Takes 30–60 seconds. You can disconnect anytime.</StepMicrocopy>
@@ -102,10 +102,15 @@ const Index = () => {
 
             {/* Unlock row */}
             <div className="mt-8 max-w-[640px] w-full">
-              <p className="text-xs font-medium text-muted-foreground mb-3 text-center">What you unlock</p>
+              <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-3 text-center">
+                What you unlock
+              </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {UNLOCKS.map(({ icon: Icon, label }) => (
-                  <div key={label} className="flex items-center gap-2 rounded-lg bg-muted/50 px-3 py-2.5">
+                  <div
+                    key={label}
+                    className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2.5"
+                  >
                     <Icon className="h-4 w-4 text-primary shrink-0" />
                     <span className="text-xs text-secondary-foreground">{label}</span>
                   </div>
@@ -123,38 +128,44 @@ const Index = () => {
             <StepBody>This profile powers brackets, leaderboards, and match results.</StepBody>
             <form onSubmit={handleProfileSubmit} className="space-y-4">
               <div className="space-y-1.5">
-                <Label htmlFor="username" className="text-sm text-card-foreground">Username</Label>
+                <Label htmlFor="username" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Username
+                </Label>
                 <Input
                   id="username"
                   value={formData.username}
                   onChange={(e) => setFormData((d) => ({ ...d, username: e.target.value }))}
-                  className="h-11 rounded-xl bg-muted border-border"
+                  className="h-11 rounded-xl bg-muted border-border focus:border-primary"
                 />
                 {formErrors.username && <p className="text-xs text-destructive">{formErrors.username}</p>}
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="email" className="text-sm text-card-foreground">Email</Label>
+                <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Email
+                </Label>
                 <Input
                   id="email"
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData((d) => ({ ...d, email: e.target.value }))}
-                  className="h-11 rounded-xl bg-muted border-border"
+                  className="h-11 rounded-xl bg-muted border-border focus:border-primary"
                 />
                 {formErrors.email && <p className="text-xs text-destructive">{formErrors.email}</p>}
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="password" className="text-sm text-card-foreground">Password</Label>
+                <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Password
+                </Label>
                 <Input
                   id="password"
                   type="password"
                   value={formData.password}
                   onChange={(e) => setFormData((d) => ({ ...d, password: e.target.value }))}
-                  className="h-11 rounded-xl bg-muted border-border"
+                  className="h-11 rounded-xl bg-muted border-border focus:border-primary"
                 />
                 {formErrors.password && <p className="text-xs text-destructive">{formErrors.password}</p>}
               </div>
-              <Button type="submit" className="w-full h-12 rounded-xl text-sm font-semibold">
+              <Button type="submit" className="w-full h-12 rounded-xl text-sm font-bold tracking-wide">
                 Create profile &amp; continue →
               </Button>
             </form>
@@ -178,7 +189,7 @@ const Index = () => {
             <StepLabel step={3} />
             <StepTitle>Verify your Dota account</StepTitle>
             <StepBody>Required for rank-based tournaments and fair seeding.</StepBody>
-            <Button onClick={goNext} className="w-full h-12 rounded-xl text-sm font-semibold">
+            <Button onClick={goNext} className="w-full h-12 rounded-xl text-sm font-bold tracking-wide">
               Link Steam &amp; verify →
             </Button>
             <StepMicrocopy>We only store your SteamID and public Dota data.</StepMicrocopy>
@@ -197,7 +208,7 @@ const Index = () => {
             <StepLabel step={4} />
             <StepTitle>You're verified ✅</StepTitle>
             <StepBody>Return to Discord to access tournaments and unlocked channels.</StepBody>
-            <Button asChild className="w-full h-12 rounded-xl text-sm font-semibold">
+            <Button asChild className="w-full h-12 rounded-xl text-sm font-bold tracking-wide">
               <a href="#">Return to Discord →</a>
             </Button>
             <StepMicrocopy>You can manage linked accounts anytime in your Rivals settings.</StepMicrocopy>
